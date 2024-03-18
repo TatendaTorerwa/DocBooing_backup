@@ -1,18 +1,20 @@
-#!/usr/bin/python3
-"""Defines the Appointment class."""
-from models.base_model import BaseModel
+#!/usr/bin/python
+""" holds class Appointments"""
 
-class Appointment(BaseModel):
-     """Represents a Appointment class.
+import models
+import sqlalchemy
+from sqlalchemy import Column, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from app import Base
 
-     Attributes:
-     patient_id (str): The patient idetification.
-     doctor_id (str): The doctor identification.
-     date (): the date of the appointment.
-     time(): The time of the appointment.
-     """
-     patient_id = ""
-     doctor_id = ""
-     date = ""
-     time = ""
+class Appointment(Base):
+    """Represents of Appointment."""
 
+    __tablename__ = 'Appointments'
+    AppointmentID = Column(Integer, primary_key=True)
+    PatientID = Column(Integer, ForeignKey('Patients.PatientID'), nullable=True)
+    DoctorID = Column(Integer, ForeignKey('Doctors.DoctorID'), nullable=True)
+    AppointmentTime = Column(DateTime, nullable=True)
+
+    patient = relationship("Patient", back_populates="appointments")
+    doctor = relationship("Doctor", back_populates="appointments")

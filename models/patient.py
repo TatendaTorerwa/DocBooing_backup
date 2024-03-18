@@ -1,25 +1,17 @@
 #!/usr/bin/python3
 """Defines the Patient class."""
 
-from model.base_model import BaseModel
+import models
+import sqlalchemy
+from sqlalchemy import Column, Integer, String
+from app import Base
 
-class Patient(BaseModel):
-    """Represents a Patient.
 
-    Attributes:
+class Patient(Base):
+    """Represents the Patient class."""
 
-    name (str): The name of the patient
-    age (int): The age of the patient
-    gender (str): The gender of the patient
-    username (str): username of the patient
-    email (str): the email of the patient account
-    password (str): the password of the patient account
-    user_id (str): the user id of the patient
-    """
-    name = ""
-    age = 0
-    gender = ""
-    username = ""
-    email = ""
-    password = ""
-    user_id = ""
+    __tablename__ = 'Patient'
+    PatientID = Column(Integer, primary_key=True)
+    Username = Column(String(50), nullable=True)
+    Email = Column(String(75), nullable=True)
+    Password = Column(String(30), nullable=True)
