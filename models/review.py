@@ -4,7 +4,8 @@
 
 import models
 import sqlalchemy
-from sqlalchemy import Column, Integer, Decimal, Text, DateTime, ForeignKey
+from app import Base
+from sqlalchemy import Column, Integer, Numeric, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 
@@ -15,7 +16,7 @@ class Review(Base):
     ReviewID = Column(Integer, primary_key=True)
     DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=True)
     PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=True)
-    Rating = Column(Decimal(10, 0), nullable=True)
+    Rating = Column(Numeric(10, 0), nullable=True)
     Comment = Column(Text, nullable=True)
     DatePosted = Column(DateTime, nullable=True)
 

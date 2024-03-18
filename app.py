@@ -2,7 +2,7 @@
 """Creating a database engine."""
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 """Database URL."""
 db_url = 'sqlite:///DocBooking'
