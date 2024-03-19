@@ -10,13 +10,13 @@ from sqlalchemy.orm import relationship
 
 class PatientAppointment(Base):
     """Represents the PatientAppointment class."""
+    __tablename__ = 'PatientAppointment'
+    PatientAppointmentID = Column(Integer, primary_key=True)
+    PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=True)
+    AppointmentID = Column(Integer, ForeignKey('Appointment.AppointmentID'),
+                           nullable=True)
+    ReminderDateTime = Column(DateTime, nullable=True)
+    NotificationSent = Column(Boolean, nullable=True)
 
-        __tablename__ = 'PatientAppointment'
-        PatientAppointmentID = Column(Integer, primary_key=True)
-        PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=True)
-        AppointmentID = Column(Integer, ForeignKey('Appointment.AppointmentID'), nullable=True)
-        ReminderDateTime = Column(DateTime, nullable=True)
-        NotificationSent = Column(Boolean, nullable=True)
-
-        patient = relationship("Patient", back_populates="appointments")
-        appointment = relationship("Appointment", back_populates="patients")
+    patient = relationship("Patient", back_populates="appointments")
+    appointment = relationship("Appointment", back_populates="patients")

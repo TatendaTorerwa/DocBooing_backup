@@ -2,9 +2,10 @@
 """Holds the Specialty class."""
 
 import models
-import sqlalchemy 
+import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from app import Base
+
 
 class Specialty(Base):
     """Representstion og Specialty."""

@@ -18,5 +18,3 @@ Base = declarative_base()
 
 """Create database tables based on the defined models."""
 Base.metadata.create_all(engine)
-
-
