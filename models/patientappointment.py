@@ -20,3 +20,14 @@ class PatientAppointment(Base):
 
     patient = relationship("Patient", back_populates="appointments")
     appointment = relationship("Appointment", back_populates="patients")
+
+    def serialize(self):
+        """Serialize PatientAppointment object to a dictionary."""
+        return {
+                'PatientAppointmentID': self.PatientAppointmentID,
+                'PatientID': self.PatientID,
+                'AppointmentID': self.AppointmentID,
+                'ReminderDateTime': str(self.ReminderDateTime)
+                if self.ReminderDateTime else None,
+                'NotificationSent': self.NotificationSent
+        }

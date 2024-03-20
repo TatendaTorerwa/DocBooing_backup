@@ -16,3 +16,14 @@ class Location(Base):
     City = Column(String(120), nullable=True)
     State = Column(String(100), nullable=True)
     Zipcode = Column(String(12), nullable=True)
+
+    def serialize(self):
+        """Serialize Location object to a dictionary."""
+        return {
+                'LocationID': self.LocationID,
+                'LocationName': self.LocationName,
+                'Address': self.Address,
+                'City': self.City,
+                'State': self.State,
+                'Zipcode': self.Zipcode
+        }

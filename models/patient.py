@@ -15,3 +15,11 @@ class Patient(Base):
     Username = Column(String(50), nullable=True)
     Email = Column(String(75), nullable=True)
     Password = Column(String(30), nullable=True)
+
+    def serialize(self):
+        """Serialize Patient object to a dictionary."""
+        return {
+                'PatientID': self.PatientID,
+                'Username': self.Username,
+                'Email': self.Email
+        }

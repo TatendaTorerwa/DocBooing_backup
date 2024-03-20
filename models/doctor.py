@@ -22,3 +22,15 @@ class Doctor(Base):
 
     specialty = relationship("Specialty", back_populates="doctors")
     location = relationship("Location", back_populates="doctors")
+
+    def serialize(self):
+        """Serialize Doctor object to a dictionary."""
+        return {
+                'DoctorID': self.DoctorID,
+                'FullName': self.FullName,
+                'SpecialtyID': self.SpecialtyID,
+                'LocationID': self.LocationID,
+                'AppointmentDateTime': self.AppointmentDateTime.
+                strftime("%Y-%m-%d %H:%M:%S")
+                if self.AppointmentDateTime else None
+        }

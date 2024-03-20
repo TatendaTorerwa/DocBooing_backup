@@ -22,3 +22,15 @@ class Review(Base):
 
     doctor = relationship("Doctor", back_populates="reviews")
     patient = relationship("Patient", back_populates="reviews")
+
+    def serialize(self):
+        """Serialize Review object to a dictionary."""
+        return {
+                'ReviewID': self.ReviewID,
+                'DoctorID': self.DoctorID,
+                'PatientID': self.PatientID,
+                'Rating': float(self.Rating) if self.Rating is not None
+                else None,
+                'Comment': self.Comment,
+                'DatePosted': str(self.DatePosted) if self.DatePosted else None
+        }

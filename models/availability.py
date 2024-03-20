@@ -19,3 +19,13 @@ class Availability(Base):
     EndTime = Column(Time, nullable=True)
 
     doctor = relationship("Doctor", back_populates="availabilities")
+
+    def serialize(self):
+        """Serialize Availability object to a dictionary."""
+        return {
+                'AvailabilityID': self.AvailabilityID,
+                'DoctorID': self.DoctorID,
+                'DayOfWeek': self.DayOfWeek,
+                'StartTime': str(self.StartTime),
+                'EndTime': str(self.EndTime)
+        }
