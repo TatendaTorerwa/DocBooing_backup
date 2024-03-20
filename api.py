@@ -76,9 +76,9 @@ def get_doctor(doctor_id):
 def add_new_doctor():
     data = request.get_json()
     add_new_doctor(data)
-    return(jsonify({'message': 'Doctir added successfully'})
+    return(jsonify({'message': 'Doctir added successfully'}))
 
-@app.route('/doctors/<int:doctor_id>', mathods=['PUT'], strict_slashes=False)
+@app.route('/doctors/<int:doctor_id>', methods=['PUT'], strict_slashes=False)
 def update_doctor(doctor_id):
     data = request.get_json()
     update_doctor_details(doctor_id, data)
@@ -104,7 +104,7 @@ def get_appointment(appointment_id):
     else:
         return jsonify({'error': 'Appointment not found'}), 404
 
-@app.route('/appointments', methods=]['POST'], strict_slashes=False)
+@app.route('/appointments', methods=['POST'], strict_slashes=False)
 def add_new_appointment():
     data = requests.get_json()
     add_new_appointment(data)
@@ -116,7 +116,7 @@ def update_appointment(appointment_id):
     update_appointment_details(appointment_id, data)
     return jsonify({'message': 'Appointment details updated successfully'})
 
-@app.route('/appointments/<int:appointment_id', methods=['DELETE'], strict_slashes=False)
+@app.route('/appointments/<int:appointment_id>', methods=['DELETE'], strict_slashes=False)
 def delete_appointment(appointment_id):
     delete_appointment(appointmet_id)
     return jsonify({'message': 'Appointment deleted successfully'})
@@ -128,7 +128,8 @@ def get_all_specialties():
     specialties = get_all_specialties()
     return jsonify([specilaty.serialize() for specialty in specialties])
 
-@app.route('/specialties/<int:specialty_id>', methods=['GET'], strict_slashes=False)def get_specialty(specialty_id):
+@app.route('/specialties/<int:specialty_id>', methods=['GET'], strict_slashes=False)
+def get_specialty(specialty_id):
     specialty = get_specialty_by_id(specialty_id)
     if specialty:
         return jsonify(specialty.serialize())
