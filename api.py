@@ -209,7 +209,7 @@ def update_review(review_id):
 
 
 @app.route('/api/reviews/<int:review_id>',
-           methods=['DELETE', strict_slashes=False])
+           methods=['DELETE'], strict_slashes=False)
 def delete_review(review_id):
     delete_review(review_id)
     return jsonify({'message': 'Review deleted successfully'})
