@@ -2,10 +2,20 @@
 """Restful api."""
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from database_operations import *
 
 """Creating an instance of flask."""
 app = Flask(__name__)
+CORS(app)
+
+"""A route handler for the root URL."""
+
+
+@app.route('/')
+def index():
+    return jsonify({'message': 'Welcome to the DocBooking'})
+
 
 """Define routes for patient operations."""
 
@@ -46,5 +56,6 @@ def delete_patient(patient_id):
     # Implement delete logic here
     return jsonify({'message': 'Patient deleted successfully'})
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
