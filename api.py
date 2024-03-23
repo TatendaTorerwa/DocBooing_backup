@@ -29,7 +29,7 @@ def get_all_patients():
 
 @app.route('/patients/<int:patient_id>', methods=['GET'], strict_slashes=False)
 def get_patient(patient_id):
-    patient = get_patient_by_id(patient_id)
+    patient = retrieve_patient_by_id(patient_id)
     if patient:
         return jsonify(patient.serialize())
     else:
@@ -62,13 +62,13 @@ def delete_patient(patient_id):
 
 @app.route('/doctors', methods=['GET'], strict_slashes=False)
 def get_all_doctors():
-    doctors = get_all_doctors()
+    doctors = retrieve_all_doctors()
     return jsonify([doctor.serialize() for doctor in doctors])
 
 
 @app.route('/doctors/<int:doctor_id>', methods=['GET'], strict_slashes=False)
 def get_doctor(doctor_id):
-    doctor = get_doctor_by_id(doctor_id)
+    doctor = retrieve_doctor_by_id(doctor_id)
     if doctor:
         return jsonify(doctor.serialize())
     else:
@@ -101,14 +101,14 @@ def delete_doctor(doctor_id):
 
 @app.route('/appointments', methods=['GET'], strict_slashes=False)
 def get_all_appointments():
-    appointments = get_all_appointments()
+    appointments = retrieve_all_appointments()
     return jsonify([appointment.serialize() for appointment in appointments])
 
 
 @app.route('/appointmenets/<int:appointment_id>',
            methods=['GET'], strict_slashes=False)
 def get_appointment(appointment_id):
-    appointment = get_appointment_by_id(appointment_id)
+    appointment = retrieve_appointment_by_id(appointment_id)
     if appointment:
         return jsonify(appointment.serialize())
     else:
@@ -142,14 +142,14 @@ def delete_appointment(appointment_id):
 
 @app.route('/specialties', methods=['GET'], strict_slashes=False)
 def get_all_specialties():
-    specialties = get_all_specialties()
+    specialties = retrieve_all_specialties()
     return jsonify([specilaty.serialize() for specialty in specialties])
 
 
 @app.route('/specialties/<int:specialty_id>',
            methods=['GET'], strict_slashes=False)
 def get_specialty(specialty_id):
-    specialty = get_specialty_by_id(specialty_id)
+    specialty = retrieve_specialty_by_id(specialty_id)
     if specialty:
         return jsonify(specialty.serialize())
     else:
@@ -161,7 +161,7 @@ def get_specialty(specialty_id):
 
 @app.route('/locations', methods=['GET'], strict_slashes=False)
 def get_all_locations():
-    location = get_all_locations()
+    location = retrieve_all_locations()
     return jsonify([location.serialize() for location in locations])
 
 
@@ -179,14 +179,14 @@ def get_location(location_id):
 
 @app.route('/api/reviews', methods=['GET'], strict_slashes=False)
 def get_all_reviews():
-    reviews = get_all_reviews()
+    reviews = retrieve_all_reviews()
     return jsonify([review.serialize() for review in reviews])
 
 
 @app.route('/api/reviews/<int:review_id>',
            methods=['GET'], strict_slashes=False)
 def get_review(review_id):
-    review = get_review_by_id(review_id)
+    review = retrieve_review_by_id(review_id)
     if review:
         return jsonify(review.serialize())
     else:
@@ -220,7 +220,7 @@ def delete_review(review_id):
 
 @app.route('/api/availability', methods=['GET'], strict_slashes=False)
 def get_doctor_availability():
-    availabilities = get_all_availabilities()
+    availabilities = retrieve_all_availabilities()
     return jsonify([availability.serialize()
                     for availability in availabilities])
 
