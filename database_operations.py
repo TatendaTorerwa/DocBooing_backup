@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""Hold the database operations."""
 
-# Import necessary modules and classes
 from app import Session
 from models.doctor import Doctor
 from models.patient import Patient
@@ -11,24 +9,24 @@ from models.location import Location
 from models.review import Review
 from models.availability import Availability
 
-# Create a session
 session = Session()
-
 
 # Patient Routes
 def register_patient(name, age, email, password):
     # Implement registration logic here
     pass
 
-
 def login_patient(email, password):
     # Implement login logic here
     pass
 
-
 def logout_patient(patient_id):
     # Implement logout logic here
     pass
+
+def retrieve_all_patients():
+    patients = session.query(Patient).all()
+    return patients
 
 
 def get_patient_by_id(patient_id):
@@ -42,7 +40,7 @@ def update_patient_details(patient_id, updated_data):
     pass
 
 
-# Doctors Routes
+# Doctor Routes
 def get_all_doctors():
     doctors = session.query(Doctor).all()
     return doctors
@@ -68,10 +66,10 @@ def update_doctor_details(doctor_id, updated_data):
 def delete_doctor(doctor_id):
     doctor = session.query(Doctor).get(doctor_id)
     session.delete(doctor)
-    session.commit()  # Commit the session after deleting a doctor,
+    session.commit()  # Commit the session after deleting a doctor
 
 
-# Appointments Routes
+# Appointment Routes
 def get_all_appointments():
     appointments = session.query(Appointment).all()
     return appointments
@@ -91,7 +89,7 @@ def add_new_appointment(patient_id, doctor_id, appointment_time):
 
 def update_appointment_details(appointment_id, updated_data):
     appointment = session.query(Appointment).get(appointment_id)
-    session.commit
+    session.commit()
 
 
 def delete_appointment(appointment_id):

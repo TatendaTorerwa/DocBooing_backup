@@ -6,6 +6,8 @@ import sqlalchemy
 from sqlalchemy import Column, Integer, DateTime, Boolean, ForeignKey
 from app import Base
 from sqlalchemy.orm import relationship
+from models.patient import Patient
+from models.appointment import Appointment
 
 
 class PatientAppointment(Base):

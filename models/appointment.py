@@ -5,6 +5,8 @@ import models
 import sqlalchemy
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+from models.doctor import Doctor
+from models.patient import Patient
 from app import Base
 
 
@@ -13,9 +15,9 @@ class Appointment(Base):
 
     __tablename__ = 'Appointments'
     AppointmentID = Column(Integer, primary_key=True)
-    PatientID = Column(Integer, ForeignKey('Patients.PatientID'),
+    PatientID = Column(Integer, ForeignKey('Patient.PatientID'),
                        nullable=True)
-    DoctorID = Column(Integer, ForeignKey('Doctors.DoctorID'), nullable=True)
+    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=True)
     AppointmentTime = Column(DateTime, nullable=True)
 
     patient = relationship("Patient", back_populates="appointments")

@@ -7,6 +7,8 @@ import sqlalchemy
 from app import Base
 from sqlalchemy import Column, Integer, Numeric, Text, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+from models.doctor import Doctor
+from models.patient import Patient
 
 
 class Review(Base):

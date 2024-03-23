@@ -22,6 +22,10 @@ class Doctor(Base):
 
     specialty = relationship("Specialty", back_populates="doctors")
     location = relationship("Location", back_populates="doctors")
+    appointments = relationship("Appointment", back_populates="doctor")
+    reviews = relationship("Review", back_populates="doctor")
+    availabilities = relationship("Availability", back_populates="doctor")
+
 
     def serialize(self):
         """Serialize Doctor object to a dictionary."""

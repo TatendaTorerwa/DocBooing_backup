@@ -1,14 +1,14 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """Creating a database engine."""
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 """Database URL."""
-db_url = 'sqlite:///DocBooking'
+mysql_db_url = "mysql://root:Torerwa1998!@localhost:3306/DocBooking"
 
 """Create database engine."""
-engine = create_engine(db_url)
+engine = create_engine(mysql_db_url)
 
 """Create a session factory."""
 Session = sessionmaker(bind=engine)

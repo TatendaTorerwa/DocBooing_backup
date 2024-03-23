@@ -23,7 +23,7 @@ def index():
 @app.route('/patients', methods=['GET'], strict_slashes=False)
 def get_all_patients():
     """Implement logic to get all patients."""
-    patients = get_all_patients()
+    patients = retrieve_all_patients()
     return jsonify([patient.serialize() for patient in patients])
 
 
