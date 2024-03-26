@@ -12,7 +12,7 @@ class Doctor(Base):
     """Represents the Doctor."""
 
     __tablename__ = 'Doctor'
-    DoctorID = Column(Integer, primary_key=True)
+    DoctorID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     FullName = Column(String(100), nullable=True)
     SpecialtyID = Column(Integer, ForeignKey('Specialty.SpecialtyID'),
                          nullable=True)
