@@ -51,9 +51,9 @@ def retrieve_doctor_by_id(doctor_id):
     return doctor
 
 
-def new_doctor(name, specialty_id, location_id):
-    new_doctor = Doctor(name=name, specialty_id=specialty_id, location_id=location_id)
-    session.add(new_doctor)
+def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime):
+    doctor = Doctor(FullName=FullName, SpecialtyID=SpecialtyID, LocationID=LocationID, AppointmentDateTime=AppointmentDateTime)
+    session.add(doctor)
     session.commit()  # Commit the session after adding a new doctor
 
 

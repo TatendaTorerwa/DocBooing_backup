@@ -62,8 +62,12 @@ def delete_patient(patient_id):
 
 @app.route('/doctors', methods=['GET'], strict_slashes=False)
 def get_all_doctors():
-    doctors = retrieve_all_doctors()
-    return jsonify([doctor.serialize() for doctor in doctors])
+	try:
+		doctors = retrieve_all_doctors()
+		return jsonify([doctor.serialize() for doctor in doctors])
+	except Exception as e:
+		print("Error fetching doctors:", e)
+		return jsonify({'erroe': 'An error occurred while fetching doctors'}), 500
 
 
 @app.route('/doctors/<int:doctor_id>', methods=['GET'], strict_slashes=False)
@@ -78,8 +82,8 @@ def get_doctor(doctor_id):
 @app.route('/doctors', methods=['POST'], strict_slashes=False)
 def add_new_doctor():
     data = request.get_json()
-    add_new_doctor(data)
-    return(jsonify({'message': 'Doctir added successfully'}))
+    new_doctor(data)
+    return(jsonify({'message': 'Doctor added successfully'}))
 
 
 @app.route('/doctors/<int:doctor_id>', methods=['PUT'], strict_slashes=False)
@@ -143,7 +147,7 @@ def delete_appointment(appointment_id):
 @app.route('/specialties', methods=['GET'], strict_slashes=False)
 def get_all_specialties():
     specialties = retrieve_all_specialties()
-    return jsonify([specilaty.serialize() for specialty in specialties])
+    return jsonify([specialty.serialize() for specialty in specialties])
 
 
 @app.route('/specialties/<int:specialty_id>',
@@ -161,7 +165,7 @@ def get_specialty(specialty_id):
 
 @app.route('/locations', methods=['GET'], strict_slashes=False)
 def get_all_locations():
-    location = retrieve_all_locations()
+    locations = retrieve_all_locations()
     return jsonify([location.serialize() for location in locations])
 
 
@@ -218,14 +222,14 @@ def delete_review(review_id):
 """Routes for availability of the doctor."""
 
 
-@app.route('/api/availability', methods=['GET'], strict_slashes=False)
+@app.route('/api/availabilities', methods=['GET'], strict_slashes=False)
 def get_doctor_availability():
     availabilities = retrieve_all_availabilities()
     return jsonify([availability.serialize()
-                    for availability in availabilities])
+                    for availability in availabilities if availability is not None])
 
 
-@app.route('/api/availability', methods=['POST'], strict_slashes=False)
+@app.route('/api/availabilities', methods=['POST'], strict_slashes=False)
 def update_doctor_availability():
     data = request.get_json()
     update_doctor_availability(data)

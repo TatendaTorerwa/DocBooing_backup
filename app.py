@@ -10,6 +10,13 @@ mysql_db_url = "mysql://root:Torerwa1998!@localhost:3306/DocBooking"
 """Create database engine."""
 engine = create_engine(mysql_db_url)
 
+try:
+    conn = engine.connect()
+    print('db.connected')
+    print('Connection object is :{}'.format(conn))
+except:
+    print('db not connected')
+
 """Create a session factory."""
 Session = sessionmaker(bind=engine)
 
