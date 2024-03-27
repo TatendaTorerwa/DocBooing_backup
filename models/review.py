@@ -15,7 +15,7 @@ class Review(Base):
     """Represents the Reviews from patients."""
 
     __tablename__ = 'Reviews'
-    ReviewID = Column(Integer, primary_key=True)
+    ReviewID = Column(Integer, primary_key=True, autoincrement=True)
     DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=True)
     PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=True)
     Rating = Column(Numeric(10, 0), nullable=True)

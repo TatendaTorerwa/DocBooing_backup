@@ -9,9 +9,9 @@ from app import Base
 
 
 class Specialty(Base):
-    """Representstion og Specialty."""
+    """Representation og Specialty."""
     __tablename__ = 'Specialty'
-    SpecialtyID = Column(Integer, primary_key=True)
+    SpecialtyID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     SpecialtyName = Column(String(80), nullable=True)
 
     doctors = relationship("Doctor", back_populates="specialty")

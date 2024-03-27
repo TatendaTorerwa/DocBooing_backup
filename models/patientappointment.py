@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Holds the PatientAppointment class."""
 
-import models
 import sqlalchemy
-from sqlalchemy import Column, Integer, DateTime, Boolean, ForeignKey
 from app import Base
+from sqlalchemy import Column, Integer, DateTime, Boolean, ForeignKey
+from sqlalchemy import create_engine
 from sqlalchemy.orm import relationship
 from models.patient import Patient
 from models.appointment import Appointment
@@ -13,10 +13,10 @@ from models.appointment import Appointment
 class PatientAppointment(Base):
     """Represents the PatientAppointment class."""
     __tablename__ = 'PatientAppointment'
-    PatientAppointmentID = Column(Integer, primary_key=True)
-    PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=True)
+    PatientAppointmentID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=False)
     AppointmentID = Column(Integer, ForeignKey('Appointment.AppointmentID'),
-                           nullable=True)
+                           nullable=False)
     ReminderDateTime = Column(DateTime, nullable=True)
     NotificationSent = Column(Boolean, nullable=True)
 

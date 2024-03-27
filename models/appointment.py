@@ -14,10 +14,10 @@ class Appointment(Base):
     """Represents of Appointment."""
 
     __tablename__ = 'Appointments'
-    AppointmentID = Column(Integer, primary_key=True)
+    AppointmentID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     PatientID = Column(Integer, ForeignKey('Patient.PatientID'),
-                       nullable=True)
-    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=True)
+                       nullable=False)
+    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=False)
     AppointmentTime = Column(DateTime, nullable=True)
 
     patient = relationship("Patient", back_populates="appointments")

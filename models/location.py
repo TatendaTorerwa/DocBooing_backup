@@ -12,9 +12,9 @@ from models.doctor import Doctor
 class Location(Base):
 	"""Represents the Location."""
 	__tablename__ = 'Location'
-	LocationID = Column(Integer, primary_key=True)
+	LocationID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
 	LocationName = Column(String(100), nullable=True)
-	Address = Column(String(150), nullable=True)
+	Address = Column(String(150), nullable=False)
 	City = Column(String(120), nullable=True)
 	State = Column(String(100), nullable=True)
 	Zipcode = Column(String(12), nullable=True)

@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Defines the Doctor class."""
-
 import models
 import sqlalchemy
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
@@ -15,9 +14,9 @@ class Doctor(Base):
     DoctorID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     FullName = Column(String(100), nullable=True)
     SpecialtyID = Column(Integer, ForeignKey('Specialty.SpecialtyID'),
-                         nullable=True)
+                         nullable=False)
     LocationID = Column(Integer, ForeignKey('Location.LocationID'),
-                        nullable=True)
+                        nullable=False)
     AppointmentDateTime = Column(DateTime, nullable=True)
 
     specialty = relationship("Specialty", back_populates="doctors")

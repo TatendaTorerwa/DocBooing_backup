@@ -11,13 +11,13 @@ from models.doctor import Doctor
 
 class Availability(Base):
     __tablename__ = 'Availability'
-    AvailabilityID = Column(Integer, primary_key=True)
+    AvailabilityID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'),
-                      nullable=True)
+                      nullable=False)
     DayOfWeek = Column(Enum('Monday', 'Tuesday', 'Wednesday',
-                            'Thursday', 'Friday'), nullable=True)
-    StartTime = Column(Time, nullable=True)
-    EndTime = Column(Time, nullable=True)
+                            'Thursday', 'Friday'), nullable=False)
+    StartTime = Column(Time, nullable=False)
+    EndTime = Column(Time, nullable=False)
 
     doctor = relationship("Doctor", back_populates="availabilities")
 
