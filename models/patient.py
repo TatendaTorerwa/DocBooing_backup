@@ -20,7 +20,7 @@ class Patient(Base):
 	appointments = relationship("Appointment", back_populates="patient")
 	reviews = relationship("Review", back_populates="patient")
 
-	  def set_password(self, password):
+	def set_password(self, password):
         	"""Hashes and sets the patient's password."""
         	self.Password = bcrypt.hash(password)
 

@@ -39,7 +39,7 @@ def get_patient(patient_id):
 @app.route('/patients', methods=['POST'], strict_slashes=False)
 def register_patient():
     data = request.get_json()
-    register_patient(data)
+    update_patient_details(data.get('patient_id'), data.get('updated_data'))
     return jsonify({'message': 'Patient registered successfully'})
 
 
@@ -121,8 +121,8 @@ def get_appointment(appointment_id):
 
 @app.route('/appointments', methods=['POST'], strict_slashes=False)
 def add_new_appointment():
-    data = requests.get_json()
-    add_new_appointment(data)
+    data = request.get_json()
+    new_appointment(data)
     return jsonify({'message': 'Appointmnet added successfully'})
 
 
@@ -172,6 +172,7 @@ def get_all_locations():
 @app.route('/locations/<int:location_id>',
            methods=['GET'], strict_slashes=False)
 def get_location(location_id):
+    location = retrieve_location_by_id(location_id)
     if location:
         return jsonify(location.serialize())
     else:

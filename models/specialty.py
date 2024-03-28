@@ -1,7 +1,6 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """Holds the Specialty class."""
 
-import models
 import sqlalchemy
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String

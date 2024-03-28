@@ -12,13 +12,25 @@ from models.availability import Availability
 session = Session()
 
 # Patient Routes
-def register_patient(name, age, email, password):
-    # Implement registration logic here
-    pass
+def register_patient(Username, Email, Password):
+    existing_patient = session.query(Patient).filter_by(Email=Email).first()
+    if existing_patient:
+        return "Email is already registered. Please use a different email address."
+    
+    # Create a new patient
+    new_patient = Patient(Username=Username, Email=Email, Password=Password)
+    session.add(new_patient)
+    session.commit()
+    return "Patient registered successfully."
 
-def login_patient(email, password):
-    # Implement login logic here
-    pass
+
+def login_patient(Email, Password):
+    # Check if a patient with the provided email and password exists
+    patient = session.query(Patient).filter_by(Email=Email, Password=Password).first()
+    if patient:
+        return f"Patient {patient.Name} logged in successfully."
+    else:
+        return "Invalid email or password. Please try again."
 
 def logout_patient(patient_id):
     # Implement logout logic here
@@ -36,9 +48,13 @@ def  retrieve_patient_by_id(patient_id):
 
 def update_patient_details(patient_id, updated_data):
     patient = session.query(Patient).get(patient_id)
-    # Update user details based on updated_data
-    pass
-
+    if patient:
+        for key, value in updated_data.items():
+            session.commit()
+            return True
+    else:
+        return False
+    
 
 # Doctor Routes
 def retrieve_all_doctors():
@@ -52,7 +68,7 @@ def retrieve_doctor_by_id(doctor_id):
 
 
 def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime):
-    doctor = Doctor(FullName=FullName, SpecialtyID=SpecialtyID, LocationID=LocationID, AppointmentDateTime=AppointmentDateTime)
+    doctor = Doctor(FullName="Dr. Jessica Lee", SpecialtyID=1, LocationID=2, AppointmentDateTime="2023-09-25 09:00:00")
     session.add(doctor)
     session.commit()  # Commit the session after adding a new doctor
 

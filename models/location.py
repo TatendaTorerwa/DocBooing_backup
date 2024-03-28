@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Holds the Location class."""
 
-import models
 import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from app import Base

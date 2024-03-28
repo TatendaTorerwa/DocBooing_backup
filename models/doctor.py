@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Defines the Doctor class."""
-import models
 import sqlalchemy
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from app import Base

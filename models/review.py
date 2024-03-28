@@ -2,7 +2,6 @@
 """Holds the Review class."""
 
 
-import models
 import sqlalchemy
 from app import Base
 from sqlalchemy import Column, Integer, Numeric, Text, DateTime, ForeignKey
@@ -15,12 +14,12 @@ class Review(Base):
     """Represents the Reviews from patients."""
 
     __tablename__ = 'Reviews'
-    ReviewID = Column(Integer, primary_key=True, autoincrement=True)
-    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=True)
-    PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=True)
-    Rating = Column(Numeric(10, 0), nullable=True)
+    ReviewID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=False)
+    PatientID = Column(Integer, ForeignKey('Patient.PatientID'), nullable=False)
+    Rating = Column(Numeric(10, 0), nullable=False)
     Comment = Column(Text, nullable=True)
-    DatePosted = Column(DateTime, nullable=True)
+    DatePosted = Column(DateTime, nullable=False)
 
     doctor = relationship("Doctor", back_populates="reviews")
     patient = relationship("Patient", back_populates="reviews")

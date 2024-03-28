@@ -1,7 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ holds class Appointments"""
 
-import models
 import sqlalchemy
 from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
