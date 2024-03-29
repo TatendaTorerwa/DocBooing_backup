@@ -32,7 +32,7 @@ def login_patient(Email, Password):
     else:
         return "Invalid email or password. Please try again."
 
-def logout_patient(patient_id):
+def logout_patient(PatientID):
     # Implement logout logic here
     pass
 
@@ -41,13 +41,13 @@ def retrieve_all_patients():
     return patients
 
 
-def  retrieve_patient_by_id(patient_id):
-    patient = session.query(Patient).get(patient_id)
+def  retrieve_patient_by_id(PatientID):
+    patient = session.query(Patient).get(PatientID)
     return patient
 
 
-def update_patient_details(patient_id, updated_data):
-    patient = session.query(Patient).get(patient_id)
+def update_patient_details(PatientID, updated_data):
+    patient = session.query(Patient).get(PatientID)
     if patient:
         for key, value in updated_data.items():
             session.commit()
@@ -62,25 +62,25 @@ def retrieve_all_doctors():
     return doctors
 
 
-def retrieve_doctor_by_id(doctor_id):
-    doctor = session.query(Doctor).get(doctor_id)
+def retrieve_doctor_by_id(DoctorID):
+    doctor = session.query(Doctor).get(DoctorID)
     return doctor
 
 
 def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime):
-    doctor = Doctor(FullName="Dr. Jessica Lee", SpecialtyID=1, LocationID=2, AppointmentDateTime="2023-09-25 09:00:00")
+    doctor = Doctor(FullName=FullName, SpecialtyID=SpecialtyID, LocationID=LocationID, AppointmentDateTime=AppointmentDateTime)
     session.add(doctor)
     session.commit()  # Commit the session after adding a new doctor
 
 
-def update_doctor_details(doctor_id, updated_data):
-    doctor = session.query(Doctor).get(doctor_id)
+def update_doctor_details(DoctorID, updated_data):
+    doctor = session.query(Doctor).get(DoctorID)
     # Update doctor details based on updated_data
     session.commit()  # Commit the session after updating doctor details
 
 
-def delete_doctor(doctor_id):
-    doctor = session.query(Doctor).get(doctor_id)
+def delete_doctor(DoctorID):
+    doctor = session.query(Doctor).get(DoctorID)
     session.delete(doctor)
     session.commit()  # Commit the session after deleting a doctor
 
@@ -91,25 +91,25 @@ def retrieve_all_appointments():
     return appointments
 
 
-def retrieve_appointment_by_id(appointment_id):
-    appointment = session.query(Appointment).get(appointment_id)
+def retrieve_appointment_by_id(AppointmentID):
+    appointment = session.query(Appointment).get(AppointmentID)
     return appointment
 
 
-def new_appointment(patient_id, doctor_id, appointment_time):
-    new_appointment = Appointment(patient_id=patient_id, doctor_id=doctor_id, appointment_time=appointment_time)
+def new_appointment(PatientID, DoctorID, AppointmentTime):
+    new_appointment = Appointment(PatientID=PatientID, DoctorID=DoctorID, AppointmentTime=AppointmentTime)
     session.add(new_appointment)
     session.commit()
     return new_appointment
 
 
-def update_appointment_details(appointment_id, updated_data):
-    appointment = session.query(Appointment).get(appointment_id)
+def update_appointment_details(AppointmentID, updated_data):
+    appointment = session.query(Appointment).get(AppointmentID)
     session.commit()
 
 
-def delete_appointment(appointment_id):
-    appointment = session.query(Appointment).get(appointment_id)
+def delete_appointment(AppointmentID):
+    appointment = session.query(Appointment).get(AppointmentID)
     if appointment:
         session.delete(appointment)
         session.commit()
@@ -123,9 +123,33 @@ def retrieve_all_locations():
     return locations
 
 
-def retrieve_location_by_id(location_id):
-    location = session.query(Location).get(location_id)
+def retrieve_location_by_id(LocationID):
+    location = session.query(Location).get(LocationID)
     return location
+
+def add_location(location_data):
+    new_location = Location(**location_data)
+    session.add(new_location)
+    session.commit()
+    return new_location
+
+
+def update_location(LocationID, location_data):
+    location = session.query(Location).get(LocationID)
+    if location:
+        for key, value in location_data.items():
+            setattr(location, key, value)
+        session.commit()
+    return location
+
+
+def delete_location(LocationID):
+    location = session.query(Location).get(LocationID)
+    if location:
+        session.delete(location)
+        session.commit()
+        return True
+    return False
 
 
 # Specialty Routes
@@ -134,9 +158,31 @@ def retrieve_all_specialties():
     return specialties
 
 
-def retrieve_specialty_by_id(specialty_id):
-    specialty = session.query(Specialty).get(specialty_id)
+def retrieve_specialty_by_id(SpecialtyID):
+    specialty = session.query(Specialty).get(SpecialtyID)
     return specialty
+
+def add_specialty_to_database(SpecialtyName):
+    new_specialty = Specialty(SpecialtyName=SpecialtyName)
+    session.add(new_specialty)
+    session.commit()
+    return new_specialty
+
+def update_specialty_in_database(SpecialtyID, SpecialtyName):
+    specialty = session.query(Specialty).get(SpecialtyID)
+    if specialty:
+        specialty.SpecialtyName = SpecialtyName
+        session.commit()
+        return specialty
+    return None
+
+def delete_specialty_from_database(SpecialtyID):
+    specialty = session.query(Specialty).get(SpecialtyID)
+    if specialty:
+        session.delete(specialty)
+        session.commit()
+        return True
+    return False
 
 
 # Availability Routes
@@ -145,9 +191,32 @@ def retrieve_all_availabilities():
     return availabilities
 
 
-def retrieve_availability_by_id(availability_id):
-    availability = session.query(Availability).get(availability_id)
+def retrieve_availability_by_id(AvailabilityID):
+    availability = session.query(Availability).get(AvailabilityID)
     return availability
+
+def add_availability_db(data):
+    availability = Availability(**data)
+    session.add(availability)
+    session.commit()
+    return availability
+
+def update_availability_db(AvailabilityID, data):
+    availability = session.query(Availability).get(AvailabilityID)
+    if availability:
+        for key, value in data.items():
+            setattr(availability, key, value)
+        session.commit()
+        return True
+    return False
+
+def delete_availability_db(AvailabilityID):
+    availability = session.query(Availability).get(AvailabilityID)
+    if availability:
+        session.delete(availability)
+        session.commit()
+        return True
+    return False
 
 
 # Review Routes
@@ -156,6 +225,33 @@ def retrieve_all_reviews():
     return reviews
 
 
-def retrieve_review_by_id(review_id):
-    review = session.query(Review).get(review_id)
+def retrieve_review_by_id(ReviewID):
+    review = session.query(Review).get(ReviewID)
     return review
+
+
+def add_review(DoctorID, PatientID, Rating, Comment, DatePosted):
+    review = Review(DoctorID=DoctorID, PatientID=PatientID, Rating=Rating, Comment=Comment, DatePosted=DatePosted)
+    session.add(review)
+    session.commit()
+    return review
+
+
+def update_review(ReviewID, Rating, Comment, DatePosted):
+    review = session.query(Review).get(ReviewID)
+    if review:
+        review.Rating = Rating
+        review.Comment = Comment
+        review.DatePosted = DatePosted
+        session.commit()
+        return review
+    return None
+
+
+def delete_review(ReviewID):
+    review = session.query(Review).get(ReviewID)
+    if review:
+        session.delete(review)
+        session.commit()
+        return True
+    return False
