@@ -48,12 +48,13 @@ def update_patient(patient_id):
     update_patient_details(patient_id, data)
     return jsonify({'message': 'Patient details updated successfully'})
 
-
-@app.route('/patients/<int:patient_id>', methods=['DELETE'],
-           strict_slashes=False)
+@app.route('/patients/<int:patient_id>', methods=['DELETE'], strict_slashes=False)
 def delete_patient(patient_id):
-    delete_patient(patient_id)
-    return jsonify({'message': 'Patient deleted successfully'})
+    success, message = delete_patient_from_db(patient_id)
+    if success:
+        return jsonify({'message': message}), 200
+    else:
+        return jsonify({'error': message}), 404
 
 
 """Routes for doctor operations."""
@@ -95,7 +96,7 @@ def update_doctor(doctor_id):
 @app.route('/doctors/<int:doctor_id>',
            methods=['DELETE'], strict_slashes=False)
 def delete_doctor(doctor_id):
-    delete_doctor(doctor_id)
+    delete_doctor_from_db(doctor_id)
     return jsonify({'message': 'Doctor deleted successfully'})
 
 
@@ -140,10 +141,10 @@ def update_appointment(appointment_id):
     return jsonify({'message': 'Appointment details updated successfully'})
 
 
-@app.route('/appointments/<int:appointment_id>',
+@app.route('/appointments/<int:AppointmentID>',
            methods=['DELETE'], strict_slashes=False)
-def delete_appointment(appointment_id):
-    delete_appointment(appointmet_id)
+def delete_appointment(AppointmentID):
+    delete_appointment_route(AppointmentID)
     return jsonify({'message': 'Appointment deleted successfully'})
 
 
@@ -279,7 +280,7 @@ def add_review_route():
         return jsonify({'error': 'Failed to add review'}), 500
 
 
-@app.route('/api/reviews/<int:review_id>',
+@app.route('/api/reviews/<int:ReviewID>',
            methods=['PUT'], strict_slashes=False)
 def update_review_route(ReviewID):
     data = request.json
@@ -320,20 +321,29 @@ def update_doctor_availability():
     return jsonify({'message': "Availability added successfully", 'AvailabilityID': new_availability.AvailabilityID}), 201
 
 
-@app.route('/api/availabilities', methods=['POST'], strict_slashes=False)
-def add_availability_api():
-    data = request.get_json()
-    new_availability = add_availability_db(data)
-    return jsonify({'message': 'Availability added successfully', 'AvailabilityID': new_availability.AvailabilityID}), 201
-
-
 @app.route('/api/availabilities/<int:AvailabilityID>', methods=['PUT'], strict_slashes=False)
 def update_availability_by_id(AvailabilityID):
     data = request.get_json()
-    if update_availability_db(AvailabilityID, data):
+    if not data:
+        return jsonify({'error': 'No data provided in the request body'}), 400
+    
+    # Check if DoctorID is provided in the data
+    if 'DoctorID' not in data:
+        return jsonify({'error': 'DoctorID is required in the request body'}), 400
+    
+    # Retrieve availability record from the database
+    availability = session.query(Availability).get(AvailabilityID)
+    if availability:
+        # Update availability record attributes with data
+        for key, value in data.items():
+            setattr(availability, key, value)
+        
+        # Commit changes to the database session
+        session.commit()
+        
         return jsonify({'message': 'Availability updated successfully'}), 200
-    return jsonify({'error': 'Availability not found'}), 404
-
+    else:
+        return jsonify({'error': 'Availability not found'}), 404
 
 @app.route('/api/availabilities/<int:AvailabilityID>', methods=['DELETE'], strict_slashes=False)
 def delete_availability_by_id(AvailabilityID):

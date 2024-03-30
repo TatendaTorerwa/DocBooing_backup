@@ -8,6 +8,8 @@ from models.specialty import Specialty
 from models.location import Location
 from models.review import Review
 from models.availability import Availability
+from sqlalchemy.exc import SQLAlchemyError
+
 
 session = Session()
 
@@ -54,7 +56,23 @@ def update_patient_details(PatientID, updated_data):
             return True
     else:
         return False
-    
+
+def delete_patient_from_db(patient_id):
+    try:
+        # Fetch the patient from the database
+        patient = Patient.query.get(patient_id)
+
+        if patient:
+            # If patient exists, delete it from the database
+            db.session.delete(patient)
+            db.session.commit()
+            return True, "Patient deleted successfully"
+        else:
+            return False, "Patient not found"
+    except SQLAlchemyError as e:
+        # Handle any database errors
+        return False, f"Error deleting patient: {str(e)}"   
+ 
 
 # Doctor Routes
 def retrieve_all_doctors():
@@ -79,10 +97,18 @@ def update_doctor_details(DoctorID, updated_data):
     session.commit()  # Commit the session after updating doctor details
 
 
-def delete_doctor(DoctorID):
+def delete_doctor_from_db(DoctorID):
+    if DoctorID is None:
+        # Handle the case where DoctorID is None (or any other appropriate action)
+        return jsonify({'error': 'DoctorID cannot be None'}), 400
+    
     doctor = session.query(Doctor).get(DoctorID)
+    if doctor is None:
+        return jsonify({'error': 'Doctor not found'}), 404
+    
     session.delete(doctor)
     session.commit()  # Commit the session after deleting a doctor
+    return jsonify({'message': 'Doctor deleted successfully'}), 200
 
 
 # Appointment Routes
@@ -108,7 +134,7 @@ def update_appointment_details(AppointmentID, updated_data):
     session.commit()
 
 
-def delete_appointment(AppointmentID):
+def delete_appointment_route(AppointmentID):
     appointment = session.query(Appointment).get(AppointmentID)
     if appointment:
         session.delete(appointment)
