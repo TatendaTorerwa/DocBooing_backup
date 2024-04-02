@@ -21,17 +21,20 @@ def upgrade() -> None:
     # Disable foreign key checks temporarily
     op.execute("SET FOREIGN_KEY_CHECKS = 0;")
 
-    # Iterate over each table
+    # Modify the existing primary key column for each table
     for table in ['Doctor', 'Patient', 'Location', 'Reviews', 'Appointments', 'Specialty', 'PatientAppointment', 'Availability']:
-        # Create a new primary key column
-        op.add_column(table, sa.Column('id', sa.Integer(), nullable=False, autoincrement=True, primary_key=True))
-
-        # Drop the old primary key column
-        with op.batch_alter_table(table, reflect_args=[sa.Column('id')]) as batch_op:
-            batch_op.drop_column(f'{table}ID')
+        # Check if the primary key column already exists
+        if op.get_context().dialect.has_table(op.get_bind(), table):
+            columns = op.get_context().dialect.get_columns(op.get_bind(), table)
+            for column in columns:
+                # Ensure 'primary_key' and 'autoincrement' attributes exist before accessing them
+                if hasattr(column, 'primary_key') and hasattr(column, 'autoincrement'):
+                    if column.primary_key and not column.autoincrement:
+                        op.alter_column(table, column.name, autoincrement=True)
 
     # Re-enable foreign key checks
     op.execute("SET FOREIGN_KEY_CHECKS = 1;")
+
 
 def downgrade() -> None:
     pass

@@ -17,7 +17,23 @@ def index():
     return jsonify({'message': 'Welcome to the DocBooking'})
 
 
+
 """Define routes for patient operations."""
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        if email and password:
+            result = login_patient(email, password)
+            return jsonify({'message': result})
+        else:
+            return jsonify({'message': 'Email and password are required.'}), 400
+    else:
+        return jsonify({'message': 'Method not allowed.'}), 405
 
 
 @app.route('/patients', methods=['GET'], strict_slashes=False)
@@ -58,6 +74,22 @@ def delete_patient(patient_id):
 
 
 """Routes for doctor operations."""
+
+
+@app.route('/login/doctor', methods=['POST'])
+def login_doctor_route():
+    if request.method == 'POST':
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        if email and password:
+            result = login_doctor(email, password)
+            return jsonify({'message': result})
+        else:
+            return jsonify({'message': 'Email and password are required.'}), 400
+    else:
+        return jsonify({'message': 'Method not allowed.'}), 405
 
 
 @app.route('/doctors', methods=['GET'], strict_slashes=False)

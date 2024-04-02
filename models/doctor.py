@@ -4,6 +4,7 @@ import sqlalchemy
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from app import Base
 from sqlalchemy.orm import relationship
+import bcrypt
 
 
 class Doctor(Base):
@@ -15,8 +16,11 @@ class Doctor(Base):
     SpecialtyID = Column(Integer, ForeignKey('Specialty.SpecialtyID'),
                          nullable=False)
     LocationID = Column(Integer, ForeignKey('Location.LocationID'),
-                        nullable=False)
+                        nullable=True)
     AppointmentDateTime = Column(DateTime, nullable=True)
+
+    Email = Column(String(75), nullable=False)
+    Password = Column(String(128), nullable=False)
 
     specialty = relationship("Specialty", back_populates="doctors")
     location = relationship("Location", back_populates="doctors")
@@ -36,3 +40,11 @@ class Doctor(Base):
                 strftime("%Y-%m-%d %H:%M:%S")
                 if self.AppointmentDateTime else None
         }
+
+    def set_password(self, password):
+        """Hashes and sets the doctor's password."""
+        self.Password = bcrypt.hash(password)
+
+    def check_password(self, password):
+        """Verifies the provided password against the hashed password."""
+        return bcrypt.verify(password, self.Password)

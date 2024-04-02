@@ -13,11 +13,13 @@ from sqlalchemy.exc import SQLAlchemyError
 
 session = Session()
 
+
 # Patient Routes
 def register_patient(Username, Email, Password):
     existing_patient = session.query(Patient).filter_by(Email=Email).first()
     if existing_patient:
         return "Email is already registered. Please use a different email address."
+
     
     # Create a new patient
     new_patient = Patient(Username=Username, Email=Email, Password=Password)
@@ -33,6 +35,7 @@ def login_patient(Email, Password):
         return f"Patient {patient.Name} logged in successfully."
     else:
         return "Invalid email or password. Please try again."
+
 
 def logout_patient(PatientID):
     # Implement logout logic here
@@ -57,21 +60,15 @@ def update_patient_details(PatientID, updated_data):
     else:
         return False
 
-def delete_patient_from_db(patient_id):
-    try:
-        # Fetch the patient from the database
-        patient = Patient.query.get(patient_id)
 
-        if patient:
-            # If patient exists, delete it from the database
-            db.session.delete(patient)
-            db.session.commit()
-            return True, "Patient deleted successfully"
-        else:
-            return False, "Patient not found"
-    except SQLAlchemyError as e:
-        # Handle any database errors
-        return False, f"Error deleting patient: {str(e)}"   
+def delete_patient_from_db(patient_id):
+    patient = session.query(Patient).get(patient_id)
+    if patient:
+        session.delete(patient)
+        session.commit()
+        return True
+    else:
+        raise ValueError("Patient not found.")
  
 
 # Doctor Routes
@@ -83,6 +80,14 @@ def retrieve_all_doctors():
 def retrieve_doctor_by_id(DoctorID):
     doctor = session.query(Doctor).get(DoctorID)
     return doctor
+
+def login_doctor(Email, Password):
+    # Check if a doctor with the provided email and password exists
+    doctor = session.query(Doctor).filter_by(Email=Email, Password=Password).first()
+    if doctor:
+        return f"Doctor {doctor.FullName} logged in successfully."
+    else:
+        return "Invalid email or password. Please try again."
 
 
 def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime):
@@ -153,6 +158,7 @@ def retrieve_location_by_id(LocationID):
     location = session.query(Location).get(LocationID)
     return location
 
+
 def add_location(location_data):
     new_location = Location(**location_data)
     session.add(new_location)
@@ -188,11 +194,13 @@ def retrieve_specialty_by_id(SpecialtyID):
     specialty = session.query(Specialty).get(SpecialtyID)
     return specialty
 
+
 def add_specialty_to_database(SpecialtyName):
     new_specialty = Specialty(SpecialtyName=SpecialtyName)
     session.add(new_specialty)
     session.commit()
     return new_specialty
+
 
 def update_specialty_in_database(SpecialtyID, SpecialtyName):
     specialty = session.query(Specialty).get(SpecialtyID)
@@ -201,6 +209,7 @@ def update_specialty_in_database(SpecialtyID, SpecialtyName):
         session.commit()
         return specialty
     return None
+
 
 def delete_specialty_from_database(SpecialtyID):
     specialty = session.query(Specialty).get(SpecialtyID)
@@ -221,11 +230,13 @@ def retrieve_availability_by_id(AvailabilityID):
     availability = session.query(Availability).get(AvailabilityID)
     return availability
 
+
 def add_availability_db(data):
     availability = Availability(**data)
     session.add(availability)
     session.commit()
     return availability
+
 
 def update_availability_db(AvailabilityID, data):
     availability = session.query(Availability).get(AvailabilityID)
@@ -235,6 +246,7 @@ def update_availability_db(AvailabilityID, data):
         session.commit()
         return True
     return False
+
 
 def delete_availability_db(AvailabilityID):
     availability = session.query(Availability).get(AvailabilityID)

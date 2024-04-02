@@ -6,6 +6,7 @@ import sqlalchemy
 from sqlalchemy import Column, Integer, String
 from app import Base
 from sqlalchemy.orm import relationship
+import bcrypt
 
 
 class Patient(Base):
