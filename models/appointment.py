@@ -15,8 +15,8 @@ class Appointment(Base):
     __tablename__ = 'Appointments'
     AppointmentID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     PatientID = Column(Integer, ForeignKey('Patient.PatientID'),
-                       nullable=False)
-    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=False)
+                       nullable=True)
+    DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'), nullable=True)
     AppointmentTime = Column(DateTime, nullable=True)
 
     patient = relationship("Patient", back_populates="appointments")

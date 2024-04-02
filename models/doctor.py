@@ -14,7 +14,7 @@ class Doctor(Base):
     DoctorID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     FullName = Column(String(100), nullable=True)
     SpecialtyID = Column(Integer, ForeignKey('Specialty.SpecialtyID'),
-                         nullable=False)
+                         nullable=True)
     LocationID = Column(Integer, ForeignKey('Location.LocationID'),
                         nullable=True)
     AppointmentDateTime = Column(DateTime, nullable=True)

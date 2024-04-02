@@ -12,7 +12,7 @@ class Availability(Base):
     __tablename__ = 'Availability'
     AvailabilityID = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     DoctorID = Column(Integer, ForeignKey('Doctor.DoctorID'),
-                      nullable=False)
+                      nullable=True)
     DayOfWeek = Column(Enum('Monday', 'Tuesday', 'Wednesday',
                             'Thursday', 'Friday'), nullable=False)
     StartTime = Column(Time, nullable=False)
