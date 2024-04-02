@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from app import Session
+from flask import jsonify
 from models.doctor import Doctor
 from models.patient import Patient
 from models.appointment import Appointment
@@ -32,7 +33,7 @@ def login_patient(Email, Password):
     # Check if a patient with the provided email and password exists
     patient = session.query(Patient).filter_by(Email=Email, Password=Password).first()
     if patient:
-        return f"Patient {patient.Name} logged in successfully."
+        return f"Patient {patient.Username} logged in successfully."
     else:
         return "Invalid email or password. Please try again."
 
@@ -66,9 +67,9 @@ def delete_patient_from_db(patient_id):
     if patient:
         session.delete(patient)
         session.commit()
-        return True
+        return True, "Patient deleted successfully."
     else:
-        raise ValueError("Patient not found.")
+        return False, "Patient not found."
  
 
 # Doctor Routes
