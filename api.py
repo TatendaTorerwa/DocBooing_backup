@@ -20,7 +20,7 @@ def index():
 
 """Define routes for patient operations."""
 
-@app.route('/login/patients', methods=['POST'])
+@app.route('api/login/patients', methods=['POST'])
 def login():
     if request.method == 'POST':
         data = request.get_json()
@@ -36,14 +36,14 @@ def login():
         return jsonify({'message': 'Method not allowed.'}), 405
 
 
-@app.route('/patients', methods=['GET'], strict_slashes=False)
+@app.route('api/patients', methods=['GET'], strict_slashes=False)
 def get_all_patients():
     """Implement logic to get all patients."""
     patients = retrieve_all_patients()
     return jsonify([patient.serialize() for patient in patients])
 
 
-@app.route('/patients/<int:patient_id>', methods=['GET'], strict_slashes=False)
+@app.route('api/patients/<int:patient_id>', methods=['GET'], strict_slashes=False)
 def get_patient(patient_id):
     patient = retrieve_patient_by_id(patient_id)
     if patient:
@@ -52,19 +52,19 @@ def get_patient(patient_id):
         return jsonify({'error': 'Patient not found'}), 404
 
 
-@app.route('/patients', methods=['POST'], strict_slashes=False)
+@app.route('api/patients', methods=['POST'], strict_slashes=False)
 def new_patient():
     data = request.get_json()
     result = register_patient(data.get('Username'), data.get('Email'), data.get('Password'))
     return jsonify({'message': result})
 
-@app.route('/patients/<int:patient_id>', methods=['PUT'], strict_slashes=False)
+@app.route('api/patients/<int:patient_id>', methods=['PUT'], strict_slashes=False)
 def update_patient(patient_id):
     data = request.get_json()
     update_patient_details(patient_id, data)
     return jsonify({'message': 'Patient details updated successfully'})
 
-@app.route('/patients/<int:patient_id>', methods=['DELETE'], strict_slashes=False)
+@app.route('api/patients/<int:patient_id>', methods=['DELETE'], strict_slashes=False)
 def delete_patient(patient_id):
     success, message = delete_patient_from_db(patient_id)
     if success:
@@ -76,7 +76,7 @@ def delete_patient(patient_id):
 """Routes for doctor operations."""
 
 
-@app.route('/login/doctor', methods=['POST'])
+@app.route('api/login/doctor', methods=['POST'])
 def login_doctor_route():
     if request.method == 'POST':
         data = request.get_json()
@@ -92,7 +92,7 @@ def login_doctor_route():
         return jsonify({'message': 'Method not allowed.'}), 405
 
 
-@app.route('/doctors', methods=['GET'], strict_slashes=False)
+@app.route('api/doctors', methods=['GET'], strict_slashes=False)
 def get_all_doctors():
 	try:
 		doctors = retrieve_all_doctors()
@@ -102,7 +102,7 @@ def get_all_doctors():
 		return jsonify({'erroe': 'An error occurred while fetching doctors'}), 500
 
 
-@app.route('/doctors/<int:doctor_id>', methods=['GET'], strict_slashes=False)
+@app.route('api/doctors/<int:doctor_id>', methods=['GET'], strict_slashes=False)
 def get_doctor(doctor_id):
     doctor = retrieve_doctor_by_id(doctor_id)
     if doctor:
@@ -111,21 +111,21 @@ def get_doctor(doctor_id):
         return jsonify({'error': 'Doctor not found'}), 404
 
 
-@app.route('/doctors', methods=['POST'], strict_slashes=False)
+@app.route('api/doctors', methods=['POST'], strict_slashes=False)
 def add_new_doctor():
     data = request.get_json()
     new_doctor(data['FullName'], data['SpecialtyID'], data['LocationID'], data['AppointmentDateTime'])
     return(jsonify({'message': 'Doctor added successfully'}))
 
 
-@app.route('/doctors/<int:doctor_id>', methods=['PUT'], strict_slashes=False)
+@app.route('api/doctors/<int:doctor_id>', methods=['PUT'], strict_slashes=False)
 def update_doctor(doctor_id):
     data = request.get_json()
     update_doctor_details(doctor_id, data)
     return jsonify({'message': 'Doctor details updated successfully'})
 
 
-@app.route('/doctors/<int:doctor_id>',
+@app.route('api/doctors/<int:doctor_id>',
            methods=['DELETE'], strict_slashes=False)
 def delete_doctor(doctor_id):
     delete_doctor_from_db(doctor_id)
@@ -135,13 +135,13 @@ def delete_doctor(doctor_id):
 """Routes for appointment operations."""
 
 
-@app.route('/appointments', methods=['GET'], strict_slashes=False)
+@app.route('api/appointments', methods=['GET'], strict_slashes=False)
 def get_all_appointments():
     appointments = retrieve_all_appointments()
     return jsonify([appointment.serialize() for appointment in appointments])
 
 
-@app.route('/appointmenets/<int:appointment_id>',
+@app.route('api/appointmenets/<int:appointment_id>',
            methods=['GET'], strict_slashes=False)
 def get_appointment(appointment_id):
     appointment = retrieve_appointment_by_id(appointment_id)
@@ -151,7 +151,7 @@ def get_appointment(appointment_id):
         return jsonify({'error': 'Appointment not found'}), 404
 
 
-@app.route('/appointments', methods=['POST'], strict_slashes=False)
+@app.route('api/appointments', methods=['POST'], strict_slashes=False)
 def add_new_appointment():
     data = request.get_json()
     PatientID = data.get('PatientID')
@@ -165,7 +165,7 @@ def add_new_appointment():
     return jsonify({'message': 'Appointment added successfully'})
 
 
-@app.route('/appointments/<int:appointment_id>',
+@app.route('api/appointments/<int:appointment_id>',
            methods=['PUT'], strict_slashes=False)
 def update_appointment(appointment_id):
     data = request.get_json()
@@ -173,7 +173,7 @@ def update_appointment(appointment_id):
     return jsonify({'message': 'Appointment details updated successfully'})
 
 
-@app.route('/appointments/<int:AppointmentID>',
+@app.route('api/appointments/<int:AppointmentID>',
            methods=['DELETE'], strict_slashes=False)
 def delete_appointment(AppointmentID):
     delete_appointment_route(AppointmentID)
@@ -183,13 +183,13 @@ def delete_appointment(AppointmentID):
 """Routes for Specialties operations."""
 
 
-@app.route('/specialties', methods=['GET'], strict_slashes=False)
+@app.route('api/specialties', methods=['GET'], strict_slashes=False)
 def get_all_specialties():
     specialties = retrieve_all_specialties()
     return jsonify([specialty.serialize() for specialty in specialties])
 
 
-@app.route('/specialties/<int:specialty_id>',
+@app.route('api/specialties/<int:specialty_id>',
            methods=['GET'], strict_slashes=False)
 def get_specialty(specialty_id):
     specialty = retrieve_specialty_by_id(specialty_id)
@@ -199,7 +199,7 @@ def get_specialty(specialty_id):
         return jsonify({'error': 'specialty not found'}), 404
 
 
-@app.route('/specialties', methods=['POST'])
+@app.route('api/specialties', methods=['POST'])
 def add_specialty_route():
     data = request.get_json()
     if 'SpecialtyName' in data:
@@ -212,7 +212,7 @@ def add_specialty_route():
         return jsonify({'message': 'SpecialtyName field is required'}), 400
 
 
-@app.route('/specialties/<int:SpecialtyID>', methods=['PUT'])
+@app.route('api/specialties/<int:SpecialtyID>', methods=['PUT'])
 def update_specialty_route(SpecialtyID):
     data = request.get_json()
     if 'SpecialtyName' in data:
@@ -225,7 +225,7 @@ def update_specialty_route(SpecialtyID):
         return jsonify({'message': 'SpecialtyName field is required'}), 400
 
 
-@app.route('/specialties/<int:SpecialtyID>', methods=['DELETE'])
+@app.route('api/specialties/<int:SpecialtyID>', methods=['DELETE'])
 def delete_specialty_route(SpecialtyID):
     if delete_specialty_from_database(SpecialtyID):
         return jsonify({'message': 'Specialty deleted successfully'}), 200
@@ -236,13 +236,13 @@ def delete_specialty_route(SpecialtyID):
 """Routes for Locations operations."""
 
 
-@app.route('/locations', methods=['GET'], strict_slashes=False)
+@app.route('api/locations', methods=['GET'], strict_slashes=False)
 def get_all_locations():
     locations = retrieve_all_locations()
     return jsonify([location.serialize() for location in locations])
 
 
-@app.route('/locations/<int:location_id>',
+@app.route('api/locations/<int:location_id>',
            methods=['GET'], strict_slashes=False)
 def get_location(location_id):
     location = retrieve_location_by_id(location_id)
@@ -252,14 +252,14 @@ def get_location(location_id):
         return jsonify({'error': 'location not found'}), 404
 
 
-@app.route('/locations', methods=['POST'])
+@app.route('api/locations', methods=['POST'])
 def create_location():
     data = request.json
     location = add_location(data)
     return jsonify(location.serialize()), 201
 
 
-@app.route('/locations/<int:location_id>', methods=['PUT'])
+@app.route('api/locations/<int:location_id>', methods=['PUT'])
 def update_existing_location(location_id):
     data = request.json
     location = update_location(location_id, data)
@@ -268,7 +268,7 @@ def update_existing_location(location_id):
     return jsonify({'error': 'Location not found'}), 404
 
 
-@app.route('/locations/<int:location_id>', methods=['DELETE'])
+@app.route('api/locations/<int:location_id>', methods=['DELETE'])
 def delete_existing_location(location_id):
     location = delete_location(location_id)
     if location:
