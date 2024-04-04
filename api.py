@@ -20,7 +20,7 @@ def index():
 
 """Define routes for patient operations."""
 
-@app.route('/api/login/patients', methods=['POST'])
+@app.route('/api/login/patient', methods=['POST'])
 def login():
     if request.method == 'POST':
         data = request.get_json()

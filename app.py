@@ -14,8 +14,8 @@ try:
     conn = engine.connect()
     print('db.connected')
     print('Connection object is :{}'.format(conn))
-except:
-    print('db not connected')
+except Exception as e:
+    print('db not connected:', e)
 
 """Create a session factory."""
 Session = sessionmaker(bind=engine)
