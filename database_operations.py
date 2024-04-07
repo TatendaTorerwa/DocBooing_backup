@@ -56,8 +56,9 @@ def update_patient_details(PatientID, updated_data):
     patient = session.query(Patient).get(PatientID)
     if patient:
         for key, value in updated_data.items():
-            session.commit()
-            return True
+           setattr(patient, key, value) 
+        session.commit()
+        return True
     else:
         return False
 
