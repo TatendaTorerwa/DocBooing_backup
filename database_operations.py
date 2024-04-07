@@ -103,6 +103,11 @@ def update_doctor_details(DoctorID, updated_data):
     if doctor:
         for key, value in updated_data.items():
             setattr(doctor, key, value)
+        reviews = session.query(Review).filter_by(DoctorID=DoctorID).all()
+
+        for review in reviews:
+            review.DoctorID = doctor.DoctorID
+        
         session.commit()
         return True
     else:
@@ -289,9 +294,10 @@ def add_review(DoctorID, PatientID, Rating, Comment, DatePosted):
     return review
 
 
-def update_review(ReviewID, Rating, Comment, DatePosted):
+def update_review(ReviewID, DoctorID, Rating, Comment, DatePosted):
     review = session.query(Review).get(ReviewID)
     if review:
+        review.DoctorID = DoctorID
         review.Rating = Rating
         review.Comment = Comment
         review.DatePosted = DatePosted
