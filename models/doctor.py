@@ -19,7 +19,7 @@ class Doctor(Base):
                         nullable=True)
     AppointmentDateTime = Column(DateTime, nullable=True)
 
-    Email = Column(String(75), nullable=False)
+    Email = Column(String(75), nullable=True)
     Password = Column(String(128), nullable=False)
 
     specialty = relationship("Specialty", back_populates="doctors")
