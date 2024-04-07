@@ -100,8 +100,14 @@ def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime):
 
 def update_doctor_details(DoctorID, updated_data):
     doctor = session.query(Doctor).get(DoctorID)
-    # Update doctor details based on updated_data
-    session.commit()  # Commit the session after updating doctor details
+    if doctor:
+        for key, value in updated_data.items():
+            setattr(doctor, key, value)
+        session.commit()
+        return True
+    else:
+         return False
+
 
 
 def delete_doctor_from_db(DoctorID):
