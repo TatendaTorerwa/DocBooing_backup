@@ -20,7 +20,7 @@ class Doctor(Base):
     AppointmentDateTime = Column(DateTime, nullable=True)
 
     Email = Column(String(75), nullable=True)
-    Password = Column(String(128), nullable=False)
+    Password = Column(String(128), default='default_password', nullable=False)
 
     specialty = relationship("Specialty", back_populates="doctors")
     location = relationship("Location", back_populates="doctors")
