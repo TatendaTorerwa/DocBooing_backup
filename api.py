@@ -316,12 +316,13 @@ def add_review_route():
            methods=['PUT'], strict_slashes=False)
 def update_review_route(ReviewID):
     data = request.json
+    DoctorID = data.get('DoctorID')
     Rating = data.get('Rating')
     Comment = data.get('Comment')
     DatePosted = data.get('DatePosted')
     if Rating is None or DatePosted is None:
         return jsonify({'error': 'Missing required fields'}), 400
-    review = update_review(ReviewID, Rating, Comment, DatePosted)
+    review = update_review(ReviewID, DoctorID, Rating, Comment, DatePosted)
     if review:
         return jsonify({'success': 'Review updated successfully', 'review': review.serialize()})
     else:
