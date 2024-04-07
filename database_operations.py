@@ -138,7 +138,13 @@ def new_appointment(PatientID, DoctorID, AppointmentTime):
 
 def update_appointment_details(AppointmentID, updated_data):
     appointment = session.query(Appointment).get(AppointmentID)
-    session.commit()
+    if appointment:
+        for key, value in updated_data.items():
+            setattr(appointment, key, value)
+        session.commit()
+        return True
+    else:
+        return False
 
 
 def delete_appointment_route(AppointmentID):
