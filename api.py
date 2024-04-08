@@ -114,7 +114,7 @@ def get_doctor(doctor_id):
 @app.route('/api/doctors', methods=['POST'], strict_slashes=False)
 def add_new_doctor():
     data = request.get_json()
-    new_doctor(data['FullName'], data['SpecialtyID'], data['LocationID'], data['AppointmentDateTime'])
+    new_doctor(data['FullName'], data['SpecialtyID'], data['LocationID'], data['AppointmentDateTime'], data['Email'], data['Password'])
     return(jsonify({'message': 'Doctor added successfully'}))
 
 

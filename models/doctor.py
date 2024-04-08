@@ -20,7 +20,7 @@ class Doctor(Base):
     AppointmentDateTime = Column(DateTime, nullable=True)
 
     Email = Column(String(75), nullable=True)
-    Password = Column(String(128), default='default_password', nullable=False)
+    Password = Column(String(128), nullable=False)
 
     specialty = relationship("Specialty", back_populates="doctors")
     location = relationship("Location", back_populates="doctors")
@@ -43,8 +43,11 @@ class Doctor(Base):
 
     def set_password(self, password):
         """Hashes and sets the doctor's password."""
-        self.Password = bcrypt.hash(password)
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+        self.Password = hashed_password.decode('utf-8')
+
 
     def check_password(self, password):
         """Verifies the provided password against the hashed password."""
-        return bcrypt.verify(password, self.Password)
+        return bcrypt.checkpw(password.encode('utf-8'), self.Password.encode('utf-8'))

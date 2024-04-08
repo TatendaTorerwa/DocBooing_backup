@@ -84,16 +84,21 @@ def retrieve_doctor_by_id(DoctorID):
     return doctor
 
 def login_doctor(Email, Password):
-    # Check if a doctor with the provided email and password exists
-    doctor = session.query(Doctor).filter_by(Email=Email, Password=Password).first()
+    # Fetch the doctor based on the provided email
+    doctor = session.query(Doctor).filter_by(Email=Email).first()
     if doctor:
-        return f"Doctor {doctor.FullName} logged in successfully."
-    else:
-        return "Invalid email or password. Please try again."
+        #verify password
+        if doctor.check_password(Password):
+            return f"Doctor {doctor.FullName} logged in successfully."
+
+    return "Invalid email or password. Please try again."
 
 
-def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime):
-    doctor = Doctor(FullName=FullName, SpecialtyID=SpecialtyID, LocationID=LocationID, AppointmentDateTime=AppointmentDateTime)
+def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime, Email, Password):
+    doctor = Doctor(FullName=FullName, SpecialtyID=SpecialtyID, LocationID=LocationID, AppointmentDateTime=AppointmentDateTime, Email=Email)
+
+    doctor.set_password(Password)
+
     session.add(doctor)
     session.commit()  # Commit the session after adding a new doctor
 
