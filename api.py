@@ -20,7 +20,7 @@ def index():
 
 """Define routes for patient operations."""
 
-@app.route('/api/login/patient', methods=['POST'])
+@app.route('/api/login/patient', methods=['POST'], strict_slashes=False)
 def login():
     if request.method == 'POST':
         data = request.get_json()
@@ -35,6 +35,14 @@ def login():
     else:
         return jsonify({'message': 'Method not allowed.'}), 405
 
+
+@app.route('/api/logout/patient', methods=['POST'], strict_slashes=False)
+def logout_patient_route():
+    if request.method == 'POST':
+        result = logout_patient()
+        return jsonify({'message': result})
+    else:
+        return jsonify({'message': 'Method not allowed.'}), 405
 
 @app.route('/api/patients', methods=['GET'], strict_slashes=False)
 def get_all_patients():
@@ -76,7 +84,7 @@ def delete_patient(patient_id):
 """Routes for doctor operations."""
 
 
-@app.route('/api/login/doctor', methods=['POST'])
+@app.route('/api/login/doctor', methods=['POST'], strict_slashes=False)
 def login_doctor_route():
     if request.method == 'POST':
         data = request.get_json()
@@ -88,6 +96,15 @@ def login_doctor_route():
             return jsonify({'message': result})
         else:
             return jsonify({'message': 'Email and password are required.'}), 400
+    else:
+        return jsonify({'message': 'Method not allowed.'}), 405
+
+
+@app.route('/api/logout/doctor', methods=['POST'], strict_slashes=False)
+def logout_doctor_route():
+    if request.method == 'POST':
+        result = logout_doctor()
+        return jsonify({'message': result})
     else:
         return jsonify({'message': 'Method not allowed.'}), 405
 

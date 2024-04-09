@@ -37,10 +37,9 @@ def login_patient(Email, Password):
     else:
         return "Invalid email or password. Please try again."
 
+def logout_patient():
+    return "Patient logged out successfully."
 
-def logout_patient(PatientID):
-    # Implement logout logic here
-    pass
 
 def retrieve_all_patients():
     patients = session.query(Patient).all()
@@ -92,6 +91,10 @@ def login_doctor(Email, Password):
             return f"Doctor {doctor.FullName} logged in successfully."
 
     return "Invalid email or password. Please try again."
+
+
+def logout_doctor():
+    return "Doctor logged out successfully."
 
 
 def new_doctor(FullName, SpecialtyID, LocationID, AppointmentDateTime, Email, Password):
