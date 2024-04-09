@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 """Database URL."""
-mysql_db_url = "mysql://TatendaTorerwa:Torerwa1998!@TatendaTorerwa.mysql.pythonanywhere-services.com/TatendaTorerwa$DocBooking"
+mysql_db_url = "mysql://root:Torerwa1998!@localhost:3306/DocBooking"
 
 """Create database engine."""
 engine = create_engine(mysql_db_url)
