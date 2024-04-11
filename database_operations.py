@@ -122,7 +122,6 @@ def update_doctor_details(DoctorID, updated_data):
          return False
 
 
-
 def delete_doctor_from_db(DoctorID):
     if DoctorID is None:
         # Handle the case where DoctorID is None (or any other appropriate action)
