@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Creating a database engine."""
+"""Creating the database engine."""
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
