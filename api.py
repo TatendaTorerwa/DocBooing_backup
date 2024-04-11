@@ -182,7 +182,7 @@ def get_all_appointments():
     return jsonify([appointment.serialize() for appointment in appointments])
 
 
-@app.route('/api/appointmenets/<int:appointment_id>',
+@app.route('/api/appointments/<int:appointment_id>',
            methods=['GET'], strict_slashes=False)
 def get_appointment(appointment_id):
     """The logic to get appointment by id."""
