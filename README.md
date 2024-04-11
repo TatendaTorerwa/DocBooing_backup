@@ -20,7 +20,7 @@ To set up the backend of DocBooking, follow these steps:
 
 
 1. **Clone the repository:** 
-git clone https://github.com/yourusername/DocBooking_backup.git
+git clone https://github.com/TatendaTorerwa/DocBooking_backup.git
 
 2. **Navigate to the project directory:** 
 cd DocBooking_backup
@@ -98,7 +98,7 @@ curl https://tatendatorerwa.pythonanywhere.com/api/doctors/2
 
 ##### Create New Doctor:
 
-curl https://tatendatorerwa.pythonanywhere.com/api/doctors -d '{"FullName":"Dr Nobert Mureriwa", "SpecialtyID":8, "LocationID":9, "Email":"mandizvidza@gmail.com", "Password":"chidomandi@gmail.com", "AppointmentDateTime":"2024-03-27 16:00:00"}' -H "Content-Type: application/json"
+curl https://tatendatorerwa.pythonanywhere.com/api/doctors -d '{"FullName":"Dr Nobert Mureriwa", "SpecialtyID":8, "LocationID":9, "Email":"mandizvidza@gmail.com", "Password":"chidomandi20", "AppointmentDateTime":"2024-03-27 16:00:00"}' -H "Content-Type: application/json"
 
 ##### Update Doctor:
 
@@ -222,11 +222,11 @@ curl https://tatendatorerwa.pythonanywhere.com/api/availabilities/8
 
 ##### Patient Login:
 
-curl -X POST https://tatendatorerwa.pythonanywhere.com/api/login/patient -d '{"email": "patient@example.com", "password": "password123"}' -H "Content-Type: application/json"
+curl -X POST https://tatendatorerwa.pythonanywhere.com/api/login/patient -d '{"email": "john128@gmail.com", "password": "john123"}' -H "Content-Type: application/json"
 
 ##### Doctor Login:
 
-curl -X POST https://tatendatorerwa.pythonanywhere.com/api/login/doctor -d '{"email": "doctor@example.com", "password": "password123"}' -H "Content-Type: application/json"
+curl -X POST https://tatendatorerwa.pythonanywhere.com/api/login/doctor -d '{"email": "mandizvidza@gmail.com", "password": "chidomandi20"}' -H "Content-Type: application/json"
 
 ##### Patient Logout:
 
