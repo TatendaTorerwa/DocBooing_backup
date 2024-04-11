@@ -2,7 +2,9 @@
 
 ## Introduction
 
-DocBooking is an online platform designed to streamline the process of booking appointments with doctors. Our project aims to bridge the gap between patients and healthcare providers by providing a user-friendly interface for scheduling medical consultations.
+DocBooking is an online platform designed to streamline the process of booking appointments with doctors. Our project aims to bridge the gap between patients and healthcareproviders by providing a user-friendly interface for scheduling medical consultations.
+
+![Screenshot](blog3.png)
 
 
 ## Links
