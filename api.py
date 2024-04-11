@@ -44,6 +44,7 @@ def logout_patient_route():
     else:
         return jsonify({'message': 'Method not allowed.'}), 405
 
+
 @app.route('/api/patients', methods=['GET'], strict_slashes=False)
 def get_all_patients():
     """Implement logic to get all patients."""
@@ -66,11 +67,13 @@ def new_patient():
     result = register_patient(data.get('Username'), data.get('Email'), data.get('Password'))
     return jsonify({'message': result})
 
+
 @app.route('/api/patients/<int:patient_id>', methods=['PUT'], strict_slashes=False)
 def update_patient(patient_id):
     data = request.get_json()
     update_patient_details(patient_id, data)
     return jsonify({'message': 'Patient details updated successfully'})
+
 
 @app.route('/api/patients/<int:patient_id>', methods=['DELETE'], strict_slashes=False)
 def delete_patient(patient_id):
