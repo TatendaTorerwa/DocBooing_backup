@@ -62,6 +62,10 @@ Once you've completed these steps, the backend of DocBooking should be installed
 
 **Base URL:** [https://tatendatorerwa.pythonanywhere.com/](https://tatendatorerwa.pythonanywhere.com/)
 
+![Screenshot](blog2.PNG)
+
+
+
 #### Patients
 
 ##### Get All Patients:
