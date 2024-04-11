@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Holds the Review class."""
+"""Holds Review class."""
 
 
 import sqlalchemy
