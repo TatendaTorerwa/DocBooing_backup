@@ -44,6 +44,7 @@ def logout_patient_route():
     else:
         return jsonify({'message': 'Method not allowed.'}), 405
 
+
 @app.route('/api/patients', methods=['GET'], strict_slashes=False)
 def get_all_patients():
     """Implement logic to get all patients."""
